@@ -8,12 +8,17 @@ const tax = document.querySelector(".tax-price");
 const shipping = document.querySelector(".shipping-price");
 const total = document.querySelector(".total-price");
 
+const buyBtn = document.querySelector(".buy");
 const emptyCart = document.querySelector(".empty");
 
 const emptyControl = function () {
-  Object.keys(localStorage).length > 1
-    ? emptyCart.classList.add("d-none")
-    : emptyCart.classList.remove("d-none");
+  if (Object.keys(localStorage).length > 1) {
+    emptyCart.classList.add("d-none");
+    buyBtn.classList.remove("disabled");
+  } else {
+    emptyCart.classList.remove("d-none");
+    buyBtn.classList.add("disabled");
+  }
 };
 
 const addTotalInıt = function (productTotalPrice) {
