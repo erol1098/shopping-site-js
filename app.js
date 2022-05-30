@@ -115,7 +115,7 @@ const addCarts = function (product) {
             </div>
             <div class="row">
               <p class="card-text text-center text-md-start mt-4">
-                Product1 Total: <b>$</b
+                Product Total: <b>$</b
                 ><strong class="product-total-price">${product[5]}</strong>
               </p>
             </div>
