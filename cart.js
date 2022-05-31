@@ -37,7 +37,7 @@ allProduct.forEach((key) => {
   const newDiv = document.createElement("section");
   newDiv.classList.add(`${key}`, "row", "justify-content-center");
 
-  newDiv.innerHTML = `<div class="card my-3 p-3 col-8">
+  newDiv.innerHTML = `<div class="card my-3 p-3 col-10 col-md-8">
   <div class="row g-0 flex-sm-column flex-md-row">
     <div class="col-12 col-md-4 d-flex justify-content-center">
       <img
@@ -55,8 +55,8 @@ allProduct.forEach((key) => {
           <b>$</b><strong class="product-price">${arr[2]}</strong>
           <small><del class="product-oldprice">$${arr[3]}</del></small>
         </p>
-        <div class="row">
-          <div class="btn-group me-2 col-6 offset-2 offset-md-0">
+        <div class="row justify-content-center justify-content-md-start mt-3">
+          <div class="btn-group col-6 col-md-12 d-flex justify-content-center d-md-block">
             <button
               type="button"
               class="btn btn-secondary rounded-2 product-decrement"

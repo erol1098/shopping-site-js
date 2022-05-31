@@ -81,12 +81,12 @@ const addCarts = function (product) {
           >
             ${product[1]}
           </h5>
-          <p class="card-title text-center text-md-start">
+          <p class="card-title text-center text-md-start mt-3">
             <b>$</b><strong class="product-price">${product[2]}</strong>
             <small><del class="product-oldprice">${product[3]}</del></small>
           </p>
-          <div class="row">
-            <div class="btn-group me-2 col-6 offset-3 offset-md-0">
+          <div class="row justify-content-center justify-content-md-start mt-3">
+            <div class="btn-group col-6 d-flex justify-content-center d-md-block">
               <button
                 type="button"
                 class="btn btn-secondary rounded-2 product-decrement"
