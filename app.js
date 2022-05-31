@@ -19,9 +19,33 @@ const productTotalPrice = document.querySelector(".product-total-price");
 
 // ? const productContent = [productURL, productName, productPrice, productOldprice, productAmount, productTotalPrice, id]
 
-const product1 = ["./IMG/photo1.png", "Vintage Bag", 25.98, 34.99, 0, 0, 100];
-const product2 = ["./IMG/photo2.png", "Levi Shoes", 45.99, 54.99, 0, 0, 200];
-const product3 = ["./IMG/photo3.jpg", "Antique Clock", 74.99, 94.99, 0, 0, 300];
+const product1 = [
+  "./IMG//leatherhandbag.jpg",
+  "Leather Hand Bag",
+  229.99,
+  259.99,
+  0,
+  0,
+  100,
+];
+const product2 = [
+  "./IMG/nikesneakers.jpg",
+  "Nike Sneakers",
+  45.99,
+  54.99,
+  0,
+  0,
+  200,
+];
+const product3 = [
+  "./IMG/pocketwatch.jpg",
+  "Antique Pocket Watch",
+  74.99,
+  94.99,
+  0,
+  0,
+  300,
+];
 
 const product4 = [
   "./IMG/sunglasses.jpg",
