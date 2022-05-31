@@ -37,7 +37,7 @@ allProduct.forEach((key) => {
   const newDiv = document.createElement("section");
   newDiv.classList.add(`${key}`, "row", "justify-content-center");
 
-  newDiv.innerHTML = `<div class="card my-3 p-3 col-10 col-md-8">
+  newDiv.innerHTML = `<div class="card my-3 p-3 col-10 col-lg-12">
   <div class="row g-0 flex-sm-column flex-md-row">
     <div class="col-12 col-md-4 d-flex justify-content-center">
       <img
