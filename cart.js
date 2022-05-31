@@ -27,6 +27,11 @@ const addTotalInıt = function (productTotalPrice) {
   );
   tax.textContent = (+tax.textContent + +productTotalPrice * 0.18).toFixed(2);
   total.textContent = (+subtotal.textContent + +tax.textContent).toFixed(2);
+
+  if (total.textContent < 100) {
+    shipping.textContent = 10;
+    total.textContent = (+total.textContent + 10).toFixed(2);
+  }
 };
 
 const allProduct = Object.keys(localStorage);
