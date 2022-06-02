@@ -1,9 +1,6 @@
 "use strict";
-
 //* Variables
-
 const container = document.querySelector(".container .row");
-
 const product = document.querySelector(".product");
 const productURL = document.querySelector(".product-URL");
 const productName = document.querySelector(".product-name");
@@ -15,10 +12,11 @@ const btnIncrement = document.querySelector(".product-increment");
 const btnAdd = document.querySelector(".product-add");
 const productTotalPrice = document.querySelector(".product-total-price");
 
+//*Fixing for old version
+localStorage.removeItem("counter");
+
 //* Product Content
-
 // ? const productContent = [productURL, productName, productPrice, productOldprice, productAmount, productTotalPrice, id]
-
 const product1 = [
   "./IMG//leatherhandbag.jpg",
   "Leather Hand Bag",
@@ -86,7 +84,7 @@ const product9 = [
   900,
 ];
 
-let productID = 0;
+//* Add product card to the browser
 const addCarts = function (product) {
   const contentHTML = `
   <div class="card my-3 p-3 col-12" style="max-width: 990px">
@@ -149,14 +147,13 @@ const addCarts = function (product) {
     </div>
   </div>
   `;
-
   const newProduct = document.createElement("section");
-  newProduct.classList.add(`product${++productID}`);
   newProduct.setAttribute("data-id", product[6]);
   newProduct.innerHTML = contentHTML;
   container.append(newProduct);
 };
 
+//* Adding products
 addCarts(product1);
 addCarts(product2);
 addCarts(product3);
@@ -167,7 +164,7 @@ addCarts(product7);
 addCarts(product8);
 addCarts(product9);
 
-let counter;
+//* Decrement Amount
 const removeItemMain = function (
   productAmount,
   productTotalPrice,
@@ -179,6 +176,7 @@ const removeItemMain = function (
   ).toFixed(2);
 };
 
+//* Increment Amount
 const addItemMain = function (productAmount, productTotalPrice, productPrice) {
   productAmount.textContent = +productAmount.textContent + 1;
   productTotalPrice.textContent = (
@@ -186,7 +184,7 @@ const addItemMain = function (productAmount, productTotalPrice, productPrice) {
   ).toFixed(2);
 };
 
-counter = localStorage.getItem("counter") ? localStorage.getItem("counter") : 0;
+//* Adding Product To Local Storage
 const addCart = function (
   productName,
   productURL,
@@ -197,22 +195,22 @@ const addCart = function (
   id
 ) {
   const allProduct = Object.keys(localStorage);
-  allProduct.splice(allProduct.indexOf("counter"), 1);
   let isTrue = false;
+
+  //* Update only numbers if the product exist in Local Storage
   allProduct.forEach((key) => {
     const product = localStorage.getItem(key).split(",");
 
-    if (id === product[6]) {
+    if (key === product[6]) {
       product[4] = +product[4] + +productAmount.textContent;
       product[5] = (+product[5] + +productTotalPrice.textContent).toFixed(2);
-      console.log(product);
       localStorage.setItem(key, product);
       isTrue = true;
     }
   });
-
+  //* Add product to Local Storage
   !isTrue
-    ? localStorage.setItem(`product${++counter}`, [
+    ? localStorage.setItem(id, [
         productName.textContent,
         productURL.src,
         productPrice.textContent,
@@ -222,52 +220,43 @@ const addCart = function (
         id,
       ])
     : null;
-
-  localStorage.setItem("counter", counter);
 };
-
-const temp = document.querySelectorAll("section");
-
-container.addEventListener("click", (e) => {
-  for (let i = 1; i <= temp.length; i++) {
-    const p = e.target.closest("section");
-    const productAmount = p.querySelector(".product-amount");
-    const productPrice = p.querySelector(".product-price");
-    const productTotalPrice = p.querySelector(".product-total-price");
-    const productURL = p.querySelector(".product-URL");
-    const productName = p.querySelector(".product-name");
-    const productOldprice = p.querySelector(".product-oldprice");
-    p;
-    if (e.target.closest("section").classList.contains(`product${i}`)) {
-      if (e.target === p.querySelector(".product-decrement")) {
-        if (productAmount.textContent > 0) {
-          removeItemMain(productAmount, productTotalPrice, productPrice);
-        } else removeCart(p, productTotalPrice);
-      } else if (e.target === p.querySelector(".product-increment")) {
-        addItemMain(productAmount, productTotalPrice, productPrice);
-      } else if (e.target === p.querySelector(".product-add")) {
-        if (productAmount.textContent > 0) {
-          addCart(
-            productName,
-            productURL,
-            productPrice,
-            productOldprice,
-            productAmount,
-            productTotalPrice,
-            p.dataset.id
-          );
-        }
-
-        productAmount.textContent = productTotalPrice.textContent = 0;
+//* Increment - Decrement - Add Button
+const productsList = document.querySelectorAll("section");
+productsList.forEach((product) => {
+  product.addEventListener("click", (e) => {
+    const productAmount = product.querySelector(".product-amount");
+    const productPrice = product.querySelector(".product-price");
+    const productTotalPrice = product.querySelector(".product-total-price");
+    const productURL = product.querySelector(".product-URL");
+    const productName = product.querySelector(".product-name");
+    const productOldprice = product.querySelector(".product-oldprice");
+    if (e.target.classList.contains("product-decrement")) {
+      if (productAmount.textContent > 0) {
+        removeItemMain(productAmount, productTotalPrice, productPrice);
       }
+    } else if (e.target.classList.contains("product-increment")) {
+      addItemMain(productAmount, productTotalPrice, productPrice);
+    } else if (e.target.classList.contains("product-add")) {
+      if (productAmount.textContent > 0) {
+        addCart(
+          productName,
+          productURL,
+          productPrice,
+          productOldprice,
+          productAmount,
+          productTotalPrice,
+          product.dataset.id
+        );
+      }
+      productAmount.textContent = productTotalPrice.textContent = 0;
     }
-
     //* Show toast message
-    const toastTrigger = p.querySelector("#liveToastBtn");
+    const toastTrigger = product.querySelector("#liveToastBtn");
     const liveToast = document.getElementById("liveToast");
     toastTrigger.addEventListener("click", () => {
       const toast = new bootstrap.Toast(liveToast);
       productAmount.textContent > 0 && toast.show();
     });
-  }
+  });
 });

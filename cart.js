@@ -1,18 +1,16 @@
 "use strict";
-
 //* Variables
 const cart = document.querySelector(".cart");
-
 const subtotal = document.querySelector(".subtotal-price");
 const tax = document.querySelector(".tax-price");
 const shipping = document.querySelector(".shipping-price");
 const total = document.querySelector(".total-price");
-
 const buyBtn = document.querySelector(".buy");
 const emptyCart = document.querySelector(".empty");
 
+//* Showing Empty Card
 const emptyControl = function () {
-  if (Object.keys(localStorage).length > 1) {
+  if (Object.keys(localStorage).length > 0) {
     emptyCart.classList.add("d-none");
     buyBtn.classList.remove("disabled");
   } else {
@@ -21,6 +19,7 @@ const emptyControl = function () {
   }
 };
 
+//* Setting subtotal, tax, shipping for first time
 const addTotalInıt = function (productTotalPrice) {
   subtotal.textContent = (+subtotal.textContent + +productTotalPrice).toFixed(
     2
@@ -34,13 +33,15 @@ const addTotalInıt = function (productTotalPrice) {
   }
 };
 
+//* Get products from Local Storage and Add Products to Cart
 const allProduct = Object.keys(localStorage);
-allProduct.splice(allProduct.indexOf("counter"), 1);
+// allProduct.splice(allProduct.indexOf("counter"), 1);
 allProduct.forEach((key) => {
   const product = localStorage.getItem(key);
   const arr = product.split(",");
   const newDiv = document.createElement("section");
-  newDiv.classList.add(`${key}`, "row", "justify-content-center");
+  newDiv.setAttribute("data-id", key);
+  newDiv.classList.add("row", "justify-content-center");
 
   newDiv.innerHTML = `<div class="card my-3 p-3 col-10">
   <div class="row g-0 flex-sm-column flex-md-row">
@@ -104,6 +105,7 @@ allProduct.forEach((key) => {
   emptyControl();
 });
 
+//* Increment Amount
 const addItem = function (productAmount, productTotalPrice, productPrice) {
   productAmount.textContent = +productAmount.textContent + 1;
   productTotalPrice.textContent = (
@@ -118,6 +120,8 @@ const addItem = function (productAmount, productTotalPrice, productPrice) {
   ).toFixed(2);
   total.textContent = (+subtotal.textContent + +tax.textContent).toFixed(2);
 };
+
+//* Decrement Amount
 const removeItem = function (productAmount, productTotalPrice, productPrice) {
   productAmount.textContent = +productAmount.textContent - 1;
   productTotalPrice.textContent = (
@@ -133,6 +137,7 @@ const removeItem = function (productAmount, productTotalPrice, productPrice) {
   total.textContent = (+subtotal.textContent + +tax.textContent).toFixed(2);
 };
 
+//* Add Shipping
 const addShipping = function () {
   +total.textContent === 0
     ? (shipping.textContent = 0)
@@ -142,6 +147,8 @@ const addShipping = function () {
 
   total.textContent = +total.textContent + +shipping.textContent;
 };
+
+//* Remove Product from Cart and Update Subtotal, Tax, Shipping, Total
 const removeCart = function (product, productTotalPrice) {
   subtotal.textContent = (
     +subtotal.textContent - +productTotalPrice.textContent
@@ -161,42 +168,65 @@ const removeCart = function (product, productTotalPrice) {
     +total.textContent < 0.1 ? (total.textContent = (0).toFixed(2)) : null;
     +tax.textContent < 0.1 ? (tax.textContent = (0).toFixed(2)) : null;
   }
-  product.innerHTML = "";
+  product.remove();
 };
 
-let productLS;
+const updateProduct = function (key, productAmount, productTotalPrice) {
+  const product = localStorage.getItem(key).split(",");
+  product[4] = +productAmount.textContent;
+  product[5] = +productTotalPrice.textContent;
+  localStorage.setItem(key, product);
+};
+
+//* Delete product from local storage
+//* Decrement counter -1 for every deleting product
+
 let counter = localStorage.getItem("counter");
 const deleteItem = function (product) {
   localStorage.removeItem(product);
-  localStorage.setItem("counter", localStorage.getItem("counter") - 1);
+  // localStorage.setItem("counter", localStorage.getItem("counter") - 1);
 };
 
-const temp = document.querySelectorAll("section");
-cart.addEventListener("click", (e) => {
-  for (let i = 1; i <= counter; i++) {
-    const p = e.target.closest("section");
-    const productAmount = p.querySelector(".product-amount");
-    const productPrice = p.querySelector(".product-price");
-    const productTotalPrice = p.querySelector(".product-total-price");
-    productLS = `product${i}`;
-    if (e.target.closest("section").classList.contains(`product${i}`)) {
-      if (e.target === p.querySelector(".product-decrement")) {
-        if (productAmount.textContent > 1) {
-          removeItem(productAmount, productTotalPrice, productPrice);
-          addShipping();
-        } else {
-          removeCart(p, productTotalPrice);
-          deleteItem(productLS);
-          emptyControl();
-        }
-      } else if (e.target === p.querySelector(".product-increment")) {
-        addItem(productAmount, productTotalPrice, productPrice);
+//* Increment - Decrement - Remove Button
+const productsList = document.querySelectorAll("section");
+productsList.forEach((product) => {
+  product.addEventListener("click", (e) => {
+    const productAmount = product.querySelector(".product-amount");
+    const productPrice = product.querySelector(".product-price");
+    const productTotalPrice = product.querySelector(".product-total-price");
+    if (e.target.classList.contains("product-decrement")) {
+      if (productAmount.textContent > 1) {
+        removeItem(productAmount, productTotalPrice, productPrice);
         addShipping();
-      } else if (e.target === p.querySelector(".product-remove")) {
-        removeCart(p, productTotalPrice);
-        deleteItem(productLS);
+        updateProduct(
+          product.getAttribute("data-id"),
+          productAmount,
+          productTotalPrice
+        );
+      } else {
+        removeCart(product, productTotalPrice);
+        deleteItem(product.getAttribute("data-id"));
         emptyControl();
       }
+    } else if (e.target.classList.contains("product-increment")) {
+      addItem(productAmount, productTotalPrice, productPrice);
+      addShipping();
+      updateProduct(
+        product.getAttribute("data-id"),
+        productAmount,
+        productTotalPrice
+      );
+    } else if (e.target.classList.contains("product-remove")) {
+      removeCart(product, productTotalPrice);
+      deleteItem(product.getAttribute("data-id"));
+      emptyControl();
     }
-  }
+    //* Show toast message
+    // const toastTrigger = product.querySelector("#liveToastBtn");
+    // const liveToast = document.getElementById("liveToast");
+    // toastTrigger.addEventListener("click", () => {
+    //   const toast = new bootstrap.Toast(liveToast);
+    //   productAmount.textContent > 0 && toast.show();
+    // });
+  });
 });
