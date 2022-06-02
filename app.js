@@ -194,6 +194,7 @@ const addCart = function (
   productTotalPrice,
   id
 ) {
+  console.log(id);
   const allProduct = Object.keys(localStorage);
   let isTrue = false;
 
@@ -201,7 +202,7 @@ const addCart = function (
   allProduct.forEach((key) => {
     const product = localStorage.getItem(key).split(",");
 
-    if (key === product[6]) {
+    if (key === id) {
       product[4] = +product[4] + +productAmount.textContent;
       product[5] = (+product[5] + +productTotalPrice.textContent).toFixed(2);
       localStorage.setItem(key, product);
@@ -231,6 +232,7 @@ productsList.forEach((product) => {
     const productURL = product.querySelector(".product-URL");
     const productName = product.querySelector(".product-name");
     const productOldprice = product.querySelector(".product-oldprice");
+    const productId = product.getAttribute("data-id");
     if (e.target.classList.contains("product-decrement")) {
       if (productAmount.textContent > 0) {
         removeItemMain(productAmount, productTotalPrice, productPrice);
@@ -246,7 +248,7 @@ productsList.forEach((product) => {
           productOldprice,
           productAmount,
           productTotalPrice,
-          product.dataset.id
+          productId
         );
       }
       productAmount.textContent = productTotalPrice.textContent = 0;
