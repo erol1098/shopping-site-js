@@ -95,16 +95,17 @@ const product9 = [
 //* Add product card to the browser
 const addCarts = function (product) {
   const contentHTML = `
-  <div class="card my-3 p-3 col-12" style="max-width: 990px">
+  <div class="card my-3 p-3 col-12 border-0 shadow" style="max-width: 990px">
     <div class="row g-0 flex-sm-column flex-md-row">
       <div class="col-12 col-md-4 d-flex justify-content-center">
         <img
           src= ${product[0]}
           class="img-fluid rounded-3 m-sm-4 m-md-0 product-URL"
+          style="width:250px"
           alt=""
         />
       </div>
-      <div class="col-12 col-md-8">
+      <div class="col-12 col-md-8 d-flex align-items-center">
         <div class="card-body">
           <h5
             class="card-title text-center text-md-start product-name"

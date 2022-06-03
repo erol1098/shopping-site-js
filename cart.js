@@ -43,16 +43,17 @@ allProduct.forEach((key) => {
   newDiv.setAttribute("data-id", key);
   newDiv.classList.add("row", "justify-content-center");
 
-  newDiv.innerHTML = `<div class="card my-3 p-3 col-10">
+  newDiv.innerHTML = `<div class="card my-3 p-3 col-10 border-0 shadow">
   <div class="row g-0 flex-sm-column flex-md-row">
     <div class="col-12 col-md-4 d-flex justify-content-center">
       <img
         src="${arr[1]}"
+        style="width:250px"
         class="img-fluid rounded-3 m-sm-4 m-md-0"
         alt=""
       />
     </div>
-    <div class="col-12 col-md-8">
+    <div class="col-12 col-md-8 d-flex align-items-center">
       <div class="card-body">
         <h5 class="card-title text-center text-md-start product-name">
           ${arr[0]}
@@ -145,7 +146,7 @@ const addShipping = function () {
     ? (shipping.textContent = 10)
     : (shipping.textContent = 0);
 
-  total.textContent = +total.textContent + +shipping.textContent;
+  total.textContent = (+total.textContent + +shipping.textContent).toFixed(2);
 };
 
 //* Remove Product from Cart and Update Subtotal, Tax, Shipping, Total
@@ -162,7 +163,7 @@ const removeCart = function (product, productTotalPrice) {
     +productTotalPrice.textContent * 0.18 -
     +productTotalPrice.textContent
   ).toFixed(2);
-  total.textContent = +total.textContent - shipping.textContent;
+  total.textContent = (+total.textContent - shipping.textContent).toFixed(2);
   shipping.textContent = (0).toFixed(2);
   {
     +total.textContent < 0.1 ? (total.textContent = (0).toFixed(2)) : null;
