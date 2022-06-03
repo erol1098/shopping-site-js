@@ -18,7 +18,7 @@ localStorage.removeItem("counter");
 //* Product Content
 // ? const productContent = [productURL, productName, productPrice, productOldprice, productAmount, productTotalPrice, id]
 const product1 = [
-  "./IMG//leatherhandbag.jpg",
+  "./IMG/small/leatherhandbag.jpg",
   "Leather Hand Bag",
   229.99,
   259.99,
@@ -27,7 +27,7 @@ const product1 = [
   100,
 ];
 const product2 = [
-  "./IMG/nikesneakers.jpg",
+  "./IMG/small/nikesneakers.jpg",
   "Nike Sneakers",
   45.99,
   54.99,
@@ -36,7 +36,7 @@ const product2 = [
   200,
 ];
 const product3 = [
-  "./IMG/pocketwatch.jpg",
+  "./IMG/small/pocketwatch.jpg",
   "Antique Pocket Watch",
   74.99,
   94.99,
@@ -46,7 +46,7 @@ const product3 = [
 ];
 
 const product4 = [
-  "./IMG/sunglasses.jpg",
+  "./IMG/small/sunglasses.jpg",
   "Ray-Ban Wayfarer Sunglasses",
   53.99,
   75.99,
@@ -55,7 +55,7 @@ const product4 = [
   400,
 ];
 const product5 = [
-  "./IMG/gameboy.jpg",
+  "./IMG/small/gameboy.jpg",
   "Nintendo GameBoy",
   20.99,
   39.99,
@@ -63,9 +63,17 @@ const product5 = [
   0,
   500,
 ];
-const product6 = ["./IMG/lens.jpg", "Camera Lens", 119.99, 129.99, 0, 0, 600];
+const product6 = [
+  "./IMG/small/lens.jpg",
+  "Camera Lens",
+  119.99,
+  129.99,
+  0,
+  0,
+  600,
+];
 const product7 = [
-  "./IMG/longboard.jpg",
+  "./IMG/small/longboard.jpg",
   "Long Board",
   99.99,
   119.99,
@@ -73,9 +81,9 @@ const product7 = [
   0,
   700,
 ];
-const product8 = ["./IMG/lemon.jpg", "Lemon", 0.99, 1.99, 0, 0, 800];
+const product8 = ["./IMG/small/lemon.jpg", "Lemon", 0.99, 1.99, 0, 0, 800];
 const product9 = [
-  "./IMG/waterbottle.jpg",
+  "./IMG/small/waterbottle.jpg",
   "Water Bottle",
   14.99,
   19.99,
